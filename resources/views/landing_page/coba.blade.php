@@ -63,13 +63,7 @@ background-color: purple;
 }
 .item--3 {
 background-color: orange;
-z-index: 3;
-}
-.item--4 {
-background-color: yellow;
-}
-.item--5 {
-background-color: green;
+z-index: 1;
 }
 
 .item:last-child {
@@ -78,15 +72,15 @@ margin-right: 0;
 
 [data-position='1'] {
   transform: scale(1.75) translate3d(-100px, 0px, 0px);
-  z-index: 2;
+  z-index: 1;
 }
 [data-position='2'] {
 transform: scale(2) translate3d(0px, 0px, 0px);
-z-index: 3;
+z-index: 2;
 }
 [data-position='3'] {
 transform: scale(1.75) translate3d(100px, 0px, 0px);
-z-index: 2;
+z-index: 3;
 }
 
 
@@ -139,7 +133,56 @@ z-index: 2;
 </html>
 <script src="asset/js/courasel.js"></script>
 
+<script>
+  const carousel = document.querySelector(".carousel-shuffle");
+const items = document.querySelectorAll(".item");
+const leftButton = document.querySelector(".button--left");
+const rightButton = document.querySelector(".button--right");
 
+leftButton.addEventListener("click", function () {
+    roll("left");
+});
+rightButton.addEventListener("click", function () {
+    roll("right");
+});
+
+function roll(direction) {
+    carousel.classList.add(`moving-${direction}`);
+
+    for (var item of items) {
+        const startPosition = item.dataset.position;
+        let endPosition;
+
+        if (direction === "right") {
+            endPosition = parseInt(startPosition) + 1;
+        }
+        if (direction === "left") {
+            endPosition = parseInt(startPosition) - 1;
+        }
+        if (endPosition > 3) {
+            endPosition = 1;
+            item.style.zIndex = "-1";
+        } else if (endPosition < 1) {
+            endPosition = 3;
+            item.style.zIndex = "-1";
+        } else {
+            item.style.zIndex = "";
+        }
+        item.dataset.position = endPosition;
+        item.addEventListener(
+            "transitionend",
+            function () {
+                carousel.classList.remove(`moving-${direction}`);
+            },
+            false
+        );
+    }
+
+    const activeItem = document.querySelector('[data-position="3"]');
+    console.log(activeItem);
+}
+
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

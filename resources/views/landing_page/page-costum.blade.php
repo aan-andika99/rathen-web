@@ -388,7 +388,22 @@
                   </section>
 
 </section>
-
+<style>
+.button {
+    /* padding: 100px 100px 100px 100px; */
+    position: relative;
+    &--left {
+          left: 50%;
+          top: 50%;
+          transform: translateX(-400px);
+        }
+    &--right {
+          right: 50%;
+          top: 50%;
+          transform: translateX(50px);
+        }
+      }
+</style>
 <section id="pricelist">
     <section class="py-5 py-xl-8">
         <div class="container">
@@ -399,25 +414,29 @@
             </div>
           </div>
         </div>
-      <div class="container">
+        <div class="container">
           <div class="row">
               <div class="col-12">
-                <form action="" id="priceList"></form>
-                @csrf
-                  <div class="image-container justify-content-md-center">
-                      <div class="image-wrapper active-img">
+                  <form action="" id="priceList">
+                      @csrf
+                      
+                      <div class="image-container justify-content-md-center">
+                          <button class="btn btn-outline-primary">Left</button>
+                      <div class="image-wrapper active-img item--1" data-position="1">
                           <img src="{{asset('asset/images/image1.jpg')}}" alt="non-print" class="clickable-image" data-position="1">
                           
                           <p class="image-text">NON - PRINT</p>
                       </div>
-                      <div class="image-wrapper">
+                      <div class="image-wrapper" data-position="2">
                           <img src="{{asset('asset/images/image2.jpg')}}" alt="half-print" class="clickable-image" data-position="2">
                           <p class="image-text">HALF - PRINT</p>
                       </div>
-                      <div class="image-wrapper">
+                      <div class="image-wrapper" data-position="3">
                           <img src="{{asset('asset/images/image3.jpg')}}" alt="full-print" class="clickable-image" data-position="3">
                           <p class="image-text">FULL - PRINT</p>
                       </div>
+                        <button class="btn btn-outline-primary">Right</button>
+
                     </div>
                     <label for="nama">Nama Pemesan:</label>
                         <input type="text" id="nama_pelanggan" name="nama" required>
@@ -435,9 +454,10 @@
                         <input type="text" id="kualitas" name="kualitas" required>
                         <button type="button" >Kirim Data</button>
                     </form>
-              </div>
-          </div>
-      </div>
+
+                </div>
+            </div>
+        </div>
     </section>
     <script src="asset/js/script.js"></script>
     <script>
